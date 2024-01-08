@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    %sveltekit.head%
+    ...
+    <audio src="src/fondo.mp3" autoplay loop volume="0.03"></audio>
+    <audio id="messageSound">
+      <source src="src/envio.mp3" type="audio/mpeg">
+      Tu navegador no soporta audio.
+
+	  <audio id="tts-audio"></audio>
+    </audio>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+	<div class="bot-message"></div>
+
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=OaEaR8cX"></script>
+    <script>
+      // Verificar que el navegador sea compatible con Speech Synthesis API
+      if ("speechSynthesis" in window) {
+        // Crear objeto SpeechSynthesisUtterance con el mensaje del bot
+        var message = new SpeechSynthesisUtterance("Hola soy Samantha una Inteligencia Artificial que te quiere ayudar a aprender mas de mecanica y electricidad con un juego interactivo. En el cual tus decisiones te llevaran a diferentes aventuras. Enviame un ESTOY LISTO para empezar nuestra aventura. Recuerda siempre que tengas duda en un termino puedes escribirme.");
+        message.lang = "es-ES"; // Establecer el idioma del mensaje
+
+        // Reproducir sonido al mostrar el mensaje del bot
+        var messageSound = document.getElementById("messageSound");
+        messageSound.play();
+
+        // Leer en voz alta el mensaje del bot
+        speechSynthesis.speak(message);
+      } else {
+        console.log("El navegador no soporta Speech Synthesis API.");
+      }
+    </script>
+  </body>
+</html>
